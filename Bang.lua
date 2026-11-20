@@ -39,7 +39,8 @@ local function sendLoadChatMessage(msg)
     end)
 end
 
-sendLoadChatMessage("BANGER NI HN BANG HN")
+sendLoadChatMessage("SCRIPT BY AYAN //-----------------//--------- BEST-BANG-IN-THE-WORLD👽@@@@ TARGET BE LIKE: AΒ ΚΥΑ ΚARU 😂😢@wχωου ΜADE ΒY ΑΥΑΝ HUB BANG LOADED💀...")
+
 
 -- Safe GUI parent resolver for all executors (PC & Mobile)
 local function getSafeGuiParent()
@@ -204,7 +205,7 @@ HeaderFix.Parent = Header
 local Title = Instance.new("TextLabel")
 Title.Size = UDim2.new(1, -46, 1, 0)
 Title.Position = UDim2.new(0, 10, 0, 0)
-Title.Text = "UNIVERSAL BANG"
+Title.Text = "UNIVERSAL BANG MADE BY AYANUU"
 Title.TextColor3 = Color3.fromRGB(255, 255, 255)
 Title.Font = Enum.Font.GothamBold
 Title.TextSize = 12
