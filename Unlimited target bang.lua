@@ -1,4 +1,4 @@
--- [[ UNIVERSAL UNLIMITED TARGET BANG - MOUTH BANG HEIGHT ADJUSTED UP ]] --
+-- [[ UNIVERSAL UNLIMITED TARGET BANG - ANIM ONLY ON BANG ON/OFF ]] --
 
 if not game:IsLoaded() then game.Loaded:Wait() end
 
@@ -102,6 +102,9 @@ _G.ActiveSingleTarget = nil
 _G.BangMode = "MULTI"         -- "BANG", "MOUTH", "MULTI"
 _G.BangSpeed = 35
 _G.MultiBangSpeed = 35
+_G.EmoteSpeed = 1
+_G.EmoteId = "rbxassetid://105919095840646"
+_G.FallbackEmoteId = "rbxassetid://148840333"
 _G.BangIntensity = 2
 _G.IsRunning = false
 
@@ -179,8 +182,8 @@ makeDraggable(ToggleBtn, ToggleBtn)
 
 -- Main Compact Frame
 local MainFrame = Instance.new("Frame")
-MainFrame.Size = UDim2.new(0, 360, 0, 265)
-MainFrame.Position = UDim2.new(0.5, -180, 0.5, -132)
+MainFrame.Size = UDim2.new(0, 360, 0, 295)
+MainFrame.Position = UDim2.new(0.5, -180, 0.5, -147)
 MainFrame.BackgroundColor3 = Color3.fromRGB(16, 16, 20)
 MainFrame.BorderSizePixel = 0
 MainFrame.Parent = ScreenGui
@@ -289,7 +292,7 @@ ListPadding.PaddingLeft = UDim.new(0, 4)
 ListPadding.PaddingRight = UDim.new(0, 4)
 
 -------------------------------------------------------------------
--- RIGHT SIDE: SELECTED TARGETS, SPEEDS, MODE & START BUTTON
+-- RIGHT SIDE: SELECTED TARGETS, SPEEDS, EMOTE SPEED, MODE & START
 -------------------------------------------------------------------
 local RightPanel = Instance.new("Frame")
 RightPanel.Size = UDim2.new(0, 132, 1, -42)
@@ -313,7 +316,7 @@ SelectedTitle.BackgroundTransparency = 1
 SelectedTitle.Parent = RightPanel
 
 local SelectedName = Instance.new("TextLabel")
-SelectedName.Size = UDim2.new(1, -10, 0, 15)
+SelectedName.Size = UDim2.new(1, -10, 0, 14)
 SelectedName.Position = UDim2.new(0, 5, 0, 14)
 SelectedName.Text = "None (0)"
 SelectedName.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -326,7 +329,7 @@ SelectedName.Parent = RightPanel
 -- Custom Speed Box
 local SpeedLabel = Instance.new("TextLabel")
 SpeedLabel.Size = UDim2.new(1, -10, 0, 12)
-SpeedLabel.Position = UDim2.new(0, 5, 0, 31)
+SpeedLabel.Position = UDim2.new(0, 5, 0, 30)
 SpeedLabel.Text = "CUSTOM SPEED:"
 SpeedLabel.TextColor3 = Color3.fromRGB(140, 140, 155)
 SpeedLabel.Font = Enum.Font.GothamBold
@@ -335,8 +338,8 @@ SpeedLabel.BackgroundTransparency = 1
 SpeedLabel.Parent = RightPanel
 
 local SpeedBox = Instance.new("TextBox")
-SpeedBox.Size = UDim2.new(1, -16, 0, 23)
-SpeedBox.Position = UDim2.new(0, 8, 0, 43)
+SpeedBox.Size = UDim2.new(1, -16, 0, 22)
+SpeedBox.Position = UDim2.new(0, 8, 0, 42)
 SpeedBox.PlaceholderText = "Speed (e.g. 35)"
 SpeedBox.Text = "35"
 SpeedBox.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -364,7 +367,7 @@ end)
 -- 2 Sec Custom Multi Bang Speed TextBox
 local MultiSpeedLabel = Instance.new("TextLabel")
 MultiSpeedLabel.Size = UDim2.new(1, -10, 0, 12)
-MultiSpeedLabel.Position = UDim2.new(0, 5, 0, 69)
+MultiSpeedLabel.Position = UDim2.new(0, 5, 0, 66)
 MultiSpeedLabel.Text = "2 SEC MULTI BANG SPEED:"
 MultiSpeedLabel.TextColor3 = Color3.fromRGB(140, 140, 155)
 MultiSpeedLabel.Font = Enum.Font.GothamBold
@@ -374,8 +377,8 @@ MultiSpeedLabel.BackgroundTransparency = 1
 MultiSpeedLabel.Parent = RightPanel
 
 local MultiSpeedBox = Instance.new("TextBox")
-MultiSpeedBox.Size = UDim2.new(1, -16, 0, 23)
-MultiSpeedBox.Position = UDim2.new(0, 8, 0, 81)
+MultiSpeedBox.Size = UDim2.new(1, -16, 0, 22)
+MultiSpeedBox.Position = UDim2.new(0, 8, 0, 78)
 MultiSpeedBox.PlaceholderText = "2s Speed (e.g. 35)"
 MultiSpeedBox.Text = "35"
 MultiSpeedBox.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -400,10 +403,64 @@ MultiSpeedBox.FocusLost:Connect(function()
     end
 end)
 
+-- Custom Emote Speed TextBox
+local EmoteSpeedLabel = Instance.new("TextLabel")
+EmoteSpeedLabel.Size = UDim2.new(1, -10, 0, 12)
+EmoteSpeedLabel.Position = UDim2.new(0, 5, 0, 102)
+EmoteSpeedLabel.Text = "CUSTOM EMOTE SPEED:"
+EmoteSpeedLabel.TextColor3 = Color3.fromRGB(140, 140, 155)
+EmoteSpeedLabel.Font = Enum.Font.GothamBold
+EmoteSpeedLabel.TextSize = 8
+EmoteSpeedLabel.TextTruncate = Enum.TextTruncate.AtEnd
+EmoteSpeedLabel.BackgroundTransparency = 1
+EmoteSpeedLabel.Parent = RightPanel
+
+local EmoteSpeedBox = Instance.new("TextBox")
+EmoteSpeedBox.Size = UDim2.new(1, -16, 0, 22)
+EmoteSpeedBox.Position = UDim2.new(0, 8, 0, 114)
+EmoteSpeedBox.PlaceholderText = "Emote Speed (e.g. 1)"
+EmoteSpeedBox.Text = "1"
+EmoteSpeedBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+EmoteSpeedBox.PlaceholderColor3 = Color3.fromRGB(120, 120, 135)
+EmoteSpeedBox.BackgroundColor3 = Color3.fromRGB(32, 32, 40)
+EmoteSpeedBox.Font = Enum.Font.GothamBold
+EmoteSpeedBox.TextSize = 11
+EmoteSpeedBox.ClearTextOnFocus = false
+EmoteSpeedBox.Parent = RightPanel
+Instance.new("UICorner", EmoteSpeedBox).CornerRadius = UDim.new(0, 6)
+
+local EmoteSpeedStroke = Instance.new("UIStroke", EmoteSpeedBox)
+EmoteSpeedStroke.Thickness = 1
+EmoteSpeedStroke.Color = Color3.fromRGB(65, 65, 80)
+
+local bangAnimTrack = nil
+local cachedAnimChar = nil
+local cachedAnimId = nil
+local emotePhase = 0
+local savedJointTransforms = {}
+
+local function applyEmoteSpeedToTrack()
+    if _G.IsRunning and bangAnimTrack then
+        pcall(function()
+            bangAnimTrack:AdjustSpeed(tonumber(_G.EmoteSpeed) or 1)
+        end)
+    end
+end
+
+EmoteSpeedBox.FocusLost:Connect(function()
+    local num = tonumber(EmoteSpeedBox.Text)
+    if num and num > 0 then
+        _G.EmoteSpeed = num
+        applyEmoteSpeedToTrack()
+    else
+        EmoteSpeedBox.Text = tostring(_G.EmoteSpeed)
+    end
+end)
+
 -- Mode Cycle Button (BANG / MOUTH / MULTI)
 local ModeBtn = Instance.new("TextButton")
-ModeBtn.Size = UDim2.new(1, -16, 0, 24)
-ModeBtn.Position = UDim2.new(0, 8, 0, 111)
+ModeBtn.Size = UDim2.new(1, -16, 0, 23)
+ModeBtn.Position = UDim2.new(0, 8, 0, 142)
 ModeBtn.Text = "MODE: MULTI"
 ModeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 ModeBtn.BackgroundColor3 = Color3.fromRGB(36, 36, 48)
@@ -431,8 +488,8 @@ end)
 
 -- Start / Stop Button
 local BangBtn = Instance.new("TextButton")
-BangBtn.Size = UDim2.new(1, -16, 0, 36)
-BangBtn.Position = UDim2.new(0, 8, 1, -42)
+BangBtn.Size = UDim2.new(1, -16, 0, 34)
+BangBtn.Position = UDim2.new(0, 8, 1, -40)
 BangBtn.Text = "MULTI BANG: OFF"
 BangBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 BangBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
@@ -446,11 +503,9 @@ BangStroke.Thickness = 1
 BangStroke.Color = Color3.fromRGB(70, 70, 85)
 
 -------------------------------------------------------------------
--- UNLIMITED TARGETS ENGINE (1s PER TARGET + BANG / MOUTH / MULTI)
+-- UNLIMITED TARGETS ENGINE (ANIM ONLY WHEN BANG IS RUNNING)
 -------------------------------------------------------------------
-local bangAnimTrack = nil
 local bangConn = nil
-local cachedAnimChar = nil
 
 local function getOrderedTargets()
     local list = {}
@@ -465,14 +520,113 @@ local function getOrderedTargets()
     return list
 end
 
-local function updateSelectedSummary()
-    local list = getOrderedTargets()
-    if #list == 0 then
-        SelectedName.Text = "None (0)"
-    elseif #list == 1 then
-        SelectedName.Text = list[1].DisplayName .. " (@" .. list[1].Name .. ")"
-    else
-        SelectedName.Text = tostring(#list) .. " Targets (1s each)"
+local function restoreJoints(char)
+    for joint, originalC0 in pairs(savedJointTransforms) do
+        if joint and joint.Parent then
+            pcall(function()
+                joint.C0 = originalC0
+            end)
+        end
+    end
+    table.clear(savedJointTransforms)
+    emotePhase = 0
+end
+
+local function stopActiveAnimation()
+    if bangAnimTrack then
+        pcall(function()
+            bangAnimTrack:Stop(0.05)
+        end)
+    end
+    local char = LocalPlayer.Character
+    if char then
+        local hum = char:FindFirstChildOfClass("Humanoid")
+        if hum then
+            for _, track in ipairs(hum:GetPlayingAnimationTracks()) do
+                if track == bangAnimTrack or (track.Animation and tostring(track.Animation.AnimationId):find("105919095840646")) then
+                    pcall(function() track:Stop(0.05) end)
+                end
+            end
+        end
+        restoreJoints(char)
+    end
+end
+
+local function stepFallbackJointMotion(char, dt)
+    if not _G.IsRunning or not char or not char.Parent then return end
+    local spd = tonumber(_G.EmoteSpeed) or 1
+    emotePhase = emotePhase + (dt * spd * 4)
+    local swing = math.sin(emotePhase)
+
+    for _, desc in ipairs(char:GetDescendants()) do
+        if desc:IsA("Motor6D") then
+            if savedJointTransforms[desc] == nil then
+                savedJointTransforms[desc] = desc.C0
+            end
+            local baseC0 = savedJointTransforms[desc]
+            local jName = desc.Name:lower()
+            pcall(function()
+                if jName:find("hip") or jName:find("root") or jName:find("waist") then
+                    desc.C0 = baseC0 * CFrame.Angles(math.rad(swing * 18), 0, 0)
+                elseif jName:find("shoulder") or jName:find("arm") then
+                    desc.C0 = baseC0 * CFrame.Angles(math.rad(-swing * 12), 0, 0)
+                end
+            end)
+        end
+    end
+end
+
+local function loadTrackOnAnimator(animator, animId)
+    local anim = Instance.new("Animation")
+    anim.AnimationId = animId
+    local track = animator:LoadAnimation(anim)
+    track.Looped = true
+    pcall(function()
+        track.Priority = Enum.AnimationPriority.Action
+    end)
+    return track
+end
+
+local function ensureBangAnimation(char, hum)
+    if not _G.IsRunning then
+        stopActiveAnimation()
+        return
+    end
+    if not char or not hum or hum.Health <= 0 then return end
+
+    local desiredId = tostring(_G.EmoteId or "rbxassetid://105919095840646")
+    if cachedAnimChar ~= char or not bangAnimTrack or cachedAnimId ~= desiredId then
+        if bangAnimTrack then
+            pcall(function() bangAnimTrack:Stop(0) end)
+            bangAnimTrack = nil
+        end
+        cachedAnimChar = char
+        cachedAnimId = desiredId
+
+        pcall(function()
+            local animator = hum:FindFirstChildOfClass("Animator") or Instance.new("Animator", hum)
+            local okLoad, track = pcall(loadTrackOnAnimator, animator, desiredId)
+            if okLoad and track then
+                bangAnimTrack = track
+            else
+                local fallbackId = tostring(_G.FallbackEmoteId or "rbxassetid://148840333")
+                local okFb, fbTrack = pcall(loadTrackOnAnimator, animator, fallbackId)
+                if okFb and fbTrack then
+                    bangAnimTrack = fbTrack
+                    cachedAnimId = fallbackId
+                end
+            end
+        end)
+    end
+
+    if bangAnimTrack then
+        pcall(function()
+            if not bangAnimTrack.IsPlaying then
+                bangAnimTrack:Play(0.05, 1, tonumber(_G.EmoteSpeed) or 1)
+            else
+                bangAnimTrack:AdjustSpeed(tonumber(_G.EmoteSpeed) or 1)
+            end
+        end)
     end
 end
 
@@ -489,26 +643,8 @@ local function stopBangEngine()
         bangConn:Disconnect()
         bangConn = nil
     end
-    if bangAnimTrack then
-        pcall(function() bangAnimTrack:Stop() end)
-    end
-end
 
-local function ensureBangAnimation(char, hum)
-    if not char or not hum then return end
-    if cachedAnimChar ~= char or not bangAnimTrack then
-        cachedAnimChar = char
-        pcall(function()
-            local animator = hum:FindFirstChildOfClass("Animator") or Instance.new("Animator", hum)
-            local anim = Instance.new("Animation")
-            anim.AnimationId = "rbxassetid://148840333"
-            bangAnimTrack = animator:LoadAnimation(anim)
-            bangAnimTrack.Looped = true
-        end)
-    end
-    if bangAnimTrack and not bangAnimTrack.IsPlaying then
-        pcall(function() bangAnimTrack:Play() end)
-    end
+    stopActiveAnimation()
 end
 
 local function getTargetAnchors(plr)
@@ -538,6 +674,17 @@ local function getMyRoot(char)
     return char:FindFirstChild("HumanoidRootPart")
         or char:FindFirstChild("Torso")
         or char:FindFirstChild("UpperTorso")
+end
+
+local function updateSelectedSummary()
+    local list = getOrderedTargets()
+    if #list == 0 then
+        SelectedName.Text = "None (0)"
+    elseif #list == 1 then
+        SelectedName.Text = list[1].DisplayName .. " (@" .. list[1].Name .. ")"
+    else
+        SelectedName.Text = tostring(#list) .. " Targets (1s each)"
+    end
 end
 
 local function startBangEngine()
@@ -596,6 +743,9 @@ local function startBangEngine()
         end
 
         ensureBangAnimation(myChar, currentHum)
+        if not bangAnimTrack or not bangAnimTrack.IsPlaying then
+            stepFallbackJointMotion(myChar, dt)
+        end
 
         if currentHum then
             pcall(function()
