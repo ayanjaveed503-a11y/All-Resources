@@ -1,5 +1,5 @@
--- // AYAN 🔥 EMOTES (Glass Edition)
--- // Main GUI Background (83861593210689) + Square Freeze Button Image (120137227812230) + Toggle Sound (4483362458)
+-- // AYAN 🔥 EMOTES (PREMIUM EDITION EMOTE)
+-- // Title Updated + Main GUI Background (83861593210689) + Square Freeze Button Image (120137227812230) + Toggle Sound (4483362458)
 
 local v8 = setmetatable({}, {
 	["__index"] = function(v351, v352)
@@ -101,7 +101,8 @@ v21.CharacterAdded:Connect(function(v370)
 		if 1 == v371 then
 			v24 = v23.RigType == Enum.HumanoidRigType.R6
 			if v26 then
-				v26.Text = (v24 and "⚡ AYANUU 🔥 EMOTES (R6) | PREMIUM EDITION ⚡") or "⚡ AYANUU 🔥 EMOTES |  PREMIUM EDITION ⚡"
+				v26.Text = (v24 and "⚡ AYAN 🔥 EMOTES (R6) | PREMIUM EDITION EMOTE ⚡")
+					or "⚡ AYAN 🔥 EMOTES | PREMIUM EDITION EMOTE ⚡"
 			end
 			v371 = 7 - 5
 		end
@@ -545,14 +546,15 @@ mainBgImage.ZIndex = 0
 mainBgImage.Parent = v57
 v54(mainBgImage, 22)
 
--- iOS Glass Top Title Bar
+-- Top Title Bar
 local v77 = Instance.new("TextLabel")
 v26 = v77
 v77.Size = UDim2.new(1, -96, 0, v11("Y", 36))
 v77.Position = UDim2.new(0, 10, 0, v11("Y", 8))
 v77.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
 v77.BackgroundTransparency = 0.25
-v77.Text = (v24 and "⚡ AYAN 🔥 EMOTES (R6) | PREMIER EDITION ⚡") or "⚡ AYAN 🔥 EMOTES | PREMIUM EDITION ⚡"
+v77.Text = (v24 and "⚡ AYAN 🔥 EMOTES (R6) | PREMIUM EDITION EMOTE ⚡")
+	or "⚡ AYAN 🔥 EMOTES | PREMIUM EDITION EMOTE ⚡"
 v77.TextColor3 = Color3.new(1, 1, 1)
 v77.Font = Enum.Font.GothamBold
 v77.TextScaled = true
@@ -1259,7 +1261,12 @@ local function v247(v407, v408, v409, v410, allowCustomBeyondMax)
 	v31._sliders[v407] = v459
 	v459(v31[v407], false)
 end
-local isInitialized = false
+
+local function v248(v463, onChangedCallback)
+	if v31[v463] == nil then
+		v31[v463] = false
+	end
+	local isInitialized = false
 	local v465 = Instance.new("Frame")
 	v465.Size = UDim2.new(1, 0, 0, v11("Y", 44))
 	v465.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -1987,7 +1994,7 @@ local function v326()
 	v325.Enabled = not v325.Enabled
 end
 
--- Floating iOS Glass Bubble Toggle Button
+-- Floating Toggle Button
 v327 = Instance.new("ScreenGui")
 v327.Name = "OrionExeToggleButtonGui_iOSGlass"
 v327.ResetOnSpawn = false
@@ -2079,7 +2086,7 @@ end)
 
 updateFreezeSquareVisibility()
 
--- Subtle iOS Glass Accent Animation
+-- Subtle Accent Animation
 task.spawn(function()
 	local waveTimer = 0
 	while v49 and v49.Parent do
